@@ -1,0 +1,308 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+  .bookings-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+  }
+
+  .page-header {
+    margin-bottom: 3rem;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  .empty-icon {
+    font-size: 5rem;
+    color: #ddd;
+    margin-bottom: 2rem;
+  }
+
+  .empty-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+
+  .empty-text {
+    color: #999;
+    margin-bottom: 2rem;
+  }
+
+  .booking-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+  }
+
+  .booking-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+  }
+
+  .booking-card-body {
+    display: flex;
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+
+  .booking-image {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .booking-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .booking-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .booking-info-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  .booking-info-row i {
+    width: 20px;
+    color: #667eea;
+  }
+
+  .booking-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-top: 0.5rem;
+  }
+
+  .booking-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+  }
+
+  .status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .status-confirmed {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+  }
+
+  .status-completed {
+    background: #d1ecf1;
+    color: #0c5460;
+  }
+
+  .status-pending {
+    background: #fff3cd;
+    color: #856404;
+  }
+
+  .btn-cancel {
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    border: 2px solid #dc3545;
+    background: white;
+    color: #dc3545;
+    transition: all 0.3s ease;
+  }
+
+  .btn-cancel:hover {
+    background: #dc3545;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+  }
+
+  .btn-browse {
+    padding: 1rem 2.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-browse:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .booking-card-body {
+      flex-direction: column;
+    }
+
+    .booking-image {
+      width: 100%;
+      height: 200px;
+    }
+
+    .booking-actions {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .page-title {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<div class="bookings-container">
+  
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1 class="page-title">
+      <i class="fa-solid fa-calendar-check me-3"></i>
+      My Bookings
+    </h1>
+    <p class="page-subtitle">Manage your upcoming and past reservations</p>
+  </div>
+
+  <!-- Empty State -->
+  <% if (bookings.length === 0) { %>
+    <div class="empty-state">
+      <div class="empty-icon">
+        <i class="fa-regular fa-calendar-xmark"></i>
+      </div>
+      <h3 class="empty-title">No bookings yet</h3>
+      <p class="empty-text">Start exploring amazing places and book your next adventure!</p>
+      <a href="/listings" class="btn-browse">
+        <i class="fa-solid fa-compass me-2"></i>
+        Browse Listings
+      </a>
+    </div>
+
+  <!-- Bookings List -->
+  <% } else { %>
+    <div class="bookings-list">
+      <% for (let booking of bookings) { %>
+        
+        <div class="booking-card">
+          <div class="booking-card-body">
+            
+            <!-- Listing Image -->
+            <% if (booking.listing && booking.listing.image) { %>
+              <img src="<%= booking.listing.image.url %>" 
+                   class="booking-image" 
+                   alt="<%= booking.listing.title %>">
+            <% } else { %>
+              <div class="booking-image" style="background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-image fa-3x" style="color: #ccc;"></i>
+              </div>
+            <% } %>
+
+            <!-- Booking Details -->
+            <div class="booking-details">
+              <h3 class="booking-title">
+                <%= booking.listing ? booking.listing.title : "Listing Unavailable" %>
+              </h3>
+
+              <div class="booking-info-row">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span><strong>Check-in:</strong> <%= new Date(booking.checkIn).toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+              </div>
+
+              <div class="booking-info-row">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span><strong>Check-out:</strong> <%= new Date(booking.checkOut).toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+              </div>
+
+              <div class="booking-info-row">
+                <i class="fa-solid fa-users"></i>
+                <span><strong>Guests:</strong> <%= booking.guests %> <%= booking.guests === 1 ? 'guest' : 'guests' %></span>
+              </div>
+
+              <div class="booking-info-row">
+                <i class="fa-solid fa-clock"></i>
+                <span><strong>Booked on:</strong> <%= new Date(booking.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+              </div>
+
+              <div class="booking-price">
+                <i class="fa-solid fa-indian-rupee-sign me-1"></i>
+                <%= booking.totalPrice.toLocaleString("en-IN") %>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="booking-actions">
+              <span class="status-badge status-<%= booking.status %>">
+                <%= booking.status %>
+              </span>
+
+              <% if (booking.status === 'confirmed' && new Date(booking.checkIn) > new Date()) { %>
+                <form action="/bookings/<%= booking._id %>/cancel" method="POST">
+                  <button type="submit" class="btn-cancel">
+                    <i class="fa-solid fa-xmark me-1"></i>
+                    Cancel
+                  </button>
+                </form>
+              <% } %>
+            </div>
+
+          </div>
+        </div>
+
+      <% } %>
+    </div>
+  <% } %>
+
+</div>

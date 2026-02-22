@@ -1,0 +1,238 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container py-5">
+  
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">
+      <i class="fa-solid fa-chart-line me-2"></i>
+      Admin Dashboard
+    </h2>
+    <div>
+      <a href="/admin/bookings" class="btn btn-outline-primary me-2">
+        <i class="fa-solid fa-calendar-check me-1"></i>
+        All Bookings
+      </a>
+      <a href="/listings" class="btn btn-outline-secondary">
+        <i class="fa-solid fa-home me-1"></i>
+        Listings
+      </a>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row mb-5">
+    
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-0 bg-primary text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-uppercase mb-1">Total Listings</h6>
+              <h2 class="mb-0"><%= totalListings %></h2>
+            </div>
+            <i class="fa-solid fa-home fa-3x opacity-50"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-0 bg-success text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-uppercase mb-1">Total Users</h6>
+              <h2 class="mb-0"><%= totalUsers %></h2>
+            </div>
+            <i class="fa-solid fa-users fa-3x opacity-50"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-0 bg-warning text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-uppercase mb-1">Total Bookings</h6>
+              <h2 class="mb-0"><%= totalBookings %></h2>
+            </div>
+            <i class="fa-solid fa-calendar-check fa-3x opacity-50"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card shadow-sm border-0 bg-info text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-uppercase mb-1">Total Revenue</h6>
+              <h2 class="mb-0">₹<%= (totalRevenue / 1000).toFixed(0) %>K</h2>
+            </div>
+            <i class="fa-solid fa-indian-rupee-sign fa-3x opacity-50"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bookings by Status & Monthly Revenue -->
+  <div class="row mb-5">
+    <div class="col-md-6 mb-3">
+      <div class="card shadow-sm h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title mb-4">Bookings by Status</h5>
+          <div class="flex-grow-1">
+            <% if (bookingsByStatus.length === 0) { %>
+              <p class="text-muted">No bookings yet</p>
+            <% } else { %>
+              <% for (let status of bookingsByStatus) { %>
+                <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded">
+                  <span class="text-capitalize">
+                    <span class="badge 
+                      <% if (status._id === 'confirmed') { %>bg-success
+                      <% } else if (status._id === 'cancelled') { %>bg-danger
+                      <% } else if (status._id === 'completed') { %>bg-secondary
+                      <% } else { %>bg-warning<% } %>">
+                      <%= status._id %>
+                    </span>
+                  </span>
+                  <strong class="fs-5"><%= status.count %></strong>
+                </div>
+              <% } %>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <div class="card shadow-sm h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title mb-4">Monthly Revenue (Last 6 Months)</h5>
+          <div class="flex-grow-1">
+            <% if (monthlyRevenue.length === 0) { %>
+              <p class="text-muted">No revenue data yet</p>
+            <% } else { %>
+              <% for (let month of monthlyRevenue) { %>
+                <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded">
+                  <span class="fw-semibold"><%= month._id.month %>/<%= month._id.year %></span>
+                  <div>
+                    <span class="badge bg-primary me-2"><%= month.count %> bookings</span>
+                    <strong class="fs-6">₹<%= month.revenue.toLocaleString("en-IN") %></strong>
+                  </div>
+                </div>
+              <% } %>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Listings -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Top 5 Listings by Bookings</h5>
+          <% if (topListings.length === 0) { %>
+            <p class="text-muted">No booking data yet</p>
+          <% } else { %>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Listing</th>
+                    <th>Location</th>
+                    <th>Bookings</th>
+                    <th>Revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for (let item of topListings) { %>
+                    <tr>
+                      <td>
+                        <a href="/listings/<%= item._id._id %>" class="text-decoration-none">
+                          <%= item._id.title %>
+                        </a>
+                      </td>
+                      <td><%= item._id.location %></td>
+                      <td><span class="badge bg-primary"><%= item.bookingCount %></span></td>
+                      <td>₹<%= item.revenue.toLocaleString("en-IN") %></td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Bookings -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Recent Bookings</h5>
+          <% if (recentBookings.length === 0) { %>
+            <p class="text-muted">No bookings yet</p>
+          <% } else { %>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Listing</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for (let booking of recentBookings) { %>
+                    <tr>
+                      <td>
+                        <i class="fa-solid fa-user me-1"></i>
+                        <%= booking.user ? booking.user.username : "N/A" %>
+                      </td>
+                      <td>
+                        <% if (booking.listing) { %>
+                          <a href="/listings/<%= booking.listing._id %>" class="text-decoration-none">
+                            <%= booking.listing.title %>
+                          </a>
+                        <% } else { %>
+                          <span class="text-muted">Unavailable</span>
+                        <% } %>
+                      </td>
+                      <td><%= new Date(booking.checkIn).toLocaleDateString() %></td>
+                      <td><%= new Date(booking.checkOut).toLocaleDateString() %></td>
+                      <td>₹<%= booking.totalPrice.toLocaleString("en-IN") %></td>
+                      <td>
+                        <span class="badge 
+                          <% if (booking.status === 'confirmed') { %>bg-success
+                          <% } else if (booking.status === 'cancelled') { %>bg-danger
+                          <% } else if (booking.status === 'completed') { %>bg-secondary
+                          <% } else { %>bg-warning<% } %>">
+                          <%= booking.status %>
+                        </span>
+                      </td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

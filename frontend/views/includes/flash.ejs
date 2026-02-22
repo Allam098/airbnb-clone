@@ -1,0 +1,27 @@
+<% if(success && success.length) { %>
+  <% success.forEach(msg => { %>
+    <div class="custom-alert success-alert">
+      <i class="fa-solid fa-circle-check"></i>
+      <span><%= msg %></span>
+    </div>
+  <% }) %>
+<% } %>
+
+<% if(error && error.length) { %>
+  <% error.forEach(msg => { %>
+    <div class="custom-alert error-alert">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <span><%= msg %></span>
+    </div>
+  <% }) %>
+<% } %>
+
+<script>
+  setTimeout(() => {
+    document.querySelectorAll(".custom-alert").forEach(alert => {
+      alert.style.opacity = "0";
+      alert.style.transform = "translateY(-10px)";
+      setTimeout(() => alert.remove(), 400);
+    });
+  }, 3000);
+</script>

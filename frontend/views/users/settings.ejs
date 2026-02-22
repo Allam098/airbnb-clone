@@ -1,0 +1,271 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+  .settings-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+  }
+
+  .settings-header {
+    margin-bottom: 3rem;
+  }
+
+  .settings-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .settings-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .settings-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 1.5rem;
+  }
+
+  .settings-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .setting-item:last-child {
+    border-bottom: none;
+  }
+
+  .setting-info {
+    flex: 1;
+  }
+
+  .setting-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.25rem;
+  }
+
+  .setting-description {
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .language-selector {
+    padding: 0.5rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    min-width: 150px;
+    font-weight: 500;
+  }
+
+  .language-selector:hover {
+    border-color: #667eea;
+  }
+
+  .toggle-switch {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background: #ccc;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .toggle-switch.active {
+    background: #667eea;
+  }
+
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: left 0.3s;
+  }
+
+  .toggle-switch.active::after {
+    left: 33px;
+  }
+</style>
+
+<div class="settings-container">
+  
+  <!-- Settings Header -->
+  <div class="settings-header">
+    <h1 class="settings-title">
+      <i class="fa-solid fa-gear me-3"></i>
+      Settings
+    </h1>
+    <p class="settings-subtitle">Manage your account preferences and settings</p>
+  </div>
+
+  <!-- Language & Region -->
+  <div class="settings-card">
+    <h3 class="settings-card-title">
+      <i class="fa-solid fa-language"></i>
+      Language & Region
+    </h3>
+    
+    <div class="setting-item">
+      <div class="setting-info">
+        <div class="setting-label">Language</div>
+        <div class="setting-description">Choose your preferred language</div>
+      </div>
+      <select class="language-selector" id="languageSelect">
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="hi">हिन्दी</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Notifications -->
+  <div class="settings-card">
+    <h3 class="settings-card-title">
+      <i class="fa-solid fa-bell"></i>
+      Notifications
+    </h3>
+    
+    <div class="setting-item">
+      <div class="setting-info">
+        <div class="setting-label">Email Notifications</div>
+        <div class="setting-description">Receive booking confirmations and updates</div>
+      </div>
+      <div class="toggle-switch active" data-setting="emailNotifications"></div>
+    </div>
+    
+    <div class="setting-item">
+      <div class="setting-info">
+        <div class="setting-label">Promotional Emails</div>
+        <div class="setting-description">Receive special offers and promotions</div>
+      </div>
+      <div class="toggle-switch" data-setting="promotionalEmails"></div>
+    </div>
+  </div>
+
+  <!-- Privacy -->
+  <div class="settings-card">
+    <h3 class="settings-card-title">
+      <i class="fa-solid fa-shield-halved"></i>
+      Privacy & Security
+    </h3>
+    
+    <div class="setting-item">
+      <div class="setting-info">
+        <div class="setting-label">Profile Visibility</div>
+        <div class="setting-description">Make your profile visible to other users</div>
+      </div>
+      <div class="toggle-switch active" data-setting="profileVisibility"></div>
+    </div>
+    
+    <div class="setting-item">
+      <div class="setting-info">
+        <div class="setting-label">Show Booking History</div>
+        <div class="setting-description">Display your past bookings on your profile</div>
+      </div>
+      <div class="toggle-switch" data-setting="showBookingHistory"></div>
+    </div>
+  </div>
+
+  <!-- Account Actions -->
+  <div class="settings-card">
+    <h3 class="settings-card-title">
+      <i class="fa-solid fa-user-gear"></i>
+      Account Actions
+    </h3>
+    
+    <div class="d-flex gap-2 flex-wrap">
+      <a href="/forgot-password" class="btn btn-outline-primary">
+        <i class="fa-solid fa-key me-2"></i>
+        Change Password
+      </a>
+      
+      <a href="/profile" class="btn btn-outline-secondary">
+        <i class="fa-solid fa-user me-2"></i>
+        View Profile
+      </a>
+      
+      <button class="btn btn-outline-danger" onclick="alert('Account deletion feature coming soon!')">
+        <i class="fa-solid fa-trash me-2"></i>
+        Delete Account
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Language selector
+  const languageSelect = document.getElementById('languageSelect');
+  
+  // Load saved language
+  const savedLanguage = localStorage.getItem('preferredLanguage');
+  if (savedLanguage) {
+    languageSelect.value = savedLanguage;
+  }
+  
+  languageSelect.addEventListener('change', function() {
+    localStorage.setItem('preferredLanguage', this.value);
+    
+    // Show success message
+    const languageNames = {
+      'en': 'English',
+      'es': 'Español',
+      'fr': 'Français',
+      'de': 'Deutsch',
+      'hi': 'हिन्दी',
+      'zh': '中文',
+      'ja': '日本語'
+    };
+    
+    alert(`Language changed to ${languageNames[this.value]}`);
+  });
+
+  // Toggle switches
+  const toggleSwitches = document.querySelectorAll('.toggle-switch');
+  
+  toggleSwitches.forEach(toggle => {
+    const setting = toggle.dataset.setting;
+    
+    // Load saved state
+    const savedState = localStorage.getItem(setting);
+    if (savedState === 'false') {
+      toggle.classList.remove('active');
+    }
+    
+    toggle.addEventListener('click', function() {
+      this.classList.toggle('active');
+      const isActive = this.classList.contains('active');
+      localStorage.setItem(setting, isActive);
+    });
+  });
+</script>

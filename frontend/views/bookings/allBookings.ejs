@@ -1,0 +1,74 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container py-5">
+  
+  <h2 class="mb-4 fw-bold">
+    <i class="fa-solid fa-clipboard-list me-2"></i>
+    All Bookings
+    <span class="badge bg-primary"><%= bookings.length %></span>
+  </h2>
+
+  <% if (bookings.length === 0) { %>
+    
+    <div class="text-center py-5">
+      <i class="fa-regular fa-calendar-xmark text-muted" style="font-size: 5rem;"></i>
+      <h4 class="mt-4 text-muted">No bookings yet</h4>
+    </div>
+
+  <% } else { %>
+
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Booking ID</th>
+            <th>User</th>
+            <th>Listing</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Guests</th>
+            <th>Total Price</th>
+            <th>Status</th>
+            <th>Booked On</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let booking of bookings) { %>
+            <tr>
+              <td><code><%= booking._id.toString().slice(-6) %></code></td>
+              <td>
+                <i class="fa-solid fa-user me-1"></i>
+                <%= booking.user ? booking.user.username : "N/A" %>
+              </td>
+              <td>
+                <% if (booking.listing) { %>
+                  <a href="/listings/<%= booking.listing._id %>" class="text-decoration-none">
+                    <%= booking.listing.title %>
+                  </a>
+                <% } else { %>
+                  <span class="text-muted">Unavailable</span>
+                <% } %>
+              </td>
+              <td><%= new Date(booking.checkIn).toLocaleDateString() %></td>
+              <td><%= new Date(booking.checkOut).toLocaleDateString() %></td>
+              <td><%= booking.guests %></td>
+              <td>₹<%= booking.totalPrice.toLocaleString("en-IN") %></td>
+              <td>
+                <span class="badge 
+                  <% if (booking.status === 'confirmed') { %>bg-success
+                  <% } else if (booking.status === 'cancelled') { %>bg-danger
+                  <% } else if (booking.status === 'completed') { %>bg-secondary
+                  <% } else { %>bg-warning<% } %>">
+                  <%= booking.status %>
+                </span>
+              </td>
+              <td><%= new Date(booking.createdAt).toLocaleDateString() %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+  <% } %>
+
+</div>

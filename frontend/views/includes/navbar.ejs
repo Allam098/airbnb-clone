@@ -1,0 +1,319 @@
+<style>
+  .navbar-custom {
+    background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+    z-index: 1030;
+  }
+
+  .navbar-brand-custom {
+    color: white !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+  }
+
+  .navbar-brand-custom:hover {
+    transform: scale(1.05);
+    text-decoration: none;
+  }
+
+  .navbar-brand-custom i {
+    font-size: 1.8rem;
+  }
+
+  .nav-link-custom {
+    color: rgba(255,255,255,0.9) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-link-custom:hover {
+    background: rgba(255,255,255,0.2);
+    color: white !important;
+  }
+
+  .btn-navbar {
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-navbar-primary {
+    background: white;
+    color: #0891b2;
+  }
+
+  .btn-navbar-primary:hover {
+    background: #0891b2;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .btn-navbar-secondary {
+    background: white;
+    color: #0891b2;
+  }
+
+  .btn-navbar-secondary:hover {
+    background: #0891b2;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .badge-admin {
+    background: rgba(255,255,255,0.3);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .user-greeting {
+    color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .user-greeting i {
+    font-size: 1.2rem;
+  }
+
+  .nav-separator {
+    color: rgba(255,255,255,0.5);
+    font-size: 1.5rem;
+    margin: 0 1rem;
+    font-weight: 300;
+  }
+
+  /* Navbar Search */
+  .navbar-search-desktop {
+    max-width: 400px;
+    width: 100%;
+    flex: 0 1 auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Ensure proper spacing for non-admin users */
+  .navbar-search-desktop.user-search {
+    margin-left: 3rem;
+  }
+
+  .search-form-navbar {
+    width: 100%;
+  }
+
+  .search-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+  }
+
+  .search-input-group:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .search-icon {
+    color: #0891b2;
+    font-size: 1.1rem;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .search-input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 0.95rem;
+    color: #333;
+    background: transparent;
+    min-width: 0;
+  }
+
+  .search-input::placeholder {
+    color: #999;
+  }
+
+  .search-btn {
+    background: #0891b2;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .search-btn:hover {
+    background: #0e7490;
+    transform: scale(1.1);
+  }
+
+  .search-btn i {
+    font-size: 0.85rem;
+  }
+
+  /* Navbar layout fix */
+  @media (min-width: 992px) {
+    .navbar-expand-md .navbar-collapse {
+      display: flex !important;
+      flex-basis: auto;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-md navbar-custom sticky-top">
+  <div class="container-fluid">
+
+    <!-- Brand -->
+    <a class="navbar-brand-custom" href="<%= typeof currUser !== 'undefined' && currUser ? '/listings' : '/' %>">
+      <i class="fa-solid fa-compass"></i>
+      <span>WanderLust</span>
+    </a>
+
+    <!-- Admin Actions (Left Side - After Brand) -->
+    <% if (typeof currUser !== 'undefined' && currUser && currUser.role === "admin") { %>
+      <div class="navbar-nav ms-3 d-none d-md-flex me-4">
+        <span class="nav-separator">|</span>
+        <a class="btn btn-navbar btn-navbar-primary me-2" href="/listings/new">
+          <i class="fa-solid fa-plus"></i>
+          Add Listing
+        </a>
+        <a class="btn btn-navbar btn-navbar-secondary" href="/admin/dashboard">
+          <i class="fa-solid fa-chart-line"></i>
+          Dashboard
+        </a>
+      </div>
+    <% } %>
+
+    <!-- Toggler for mobile -->
+    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+            style="border-color: white;">
+      <i class="fa-solid fa-bars" style="color: white;"></i>
+    </button>
+
+    <!-- Navbar Content -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      
+      <!-- Search Bar (Desktop - in collapsed section) -->
+      <% if (typeof currUser !== 'undefined' && currUser) { %>
+        <div class="navbar-search-desktop <%= currUser.role !== 'admin' ? 'user-search' : '' %> d-none d-lg-block mx-auto">
+          <form action="/listings" method="GET" class="search-form-navbar">
+            <div class="search-input-group">
+              <i class="fa-solid fa-search search-icon"></i>
+              <input 
+                type="text" 
+                name="search" 
+                class="search-input" 
+                placeholder="Search destinations..."
+                value="<%= typeof search !== 'undefined' ? search : '' %>">
+              <button type="submit" class="search-btn">
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      <% } %>
+
+      <!-- Mobile Search -->
+      <% if (typeof currUser !== 'undefined' && currUser) { %>
+        <div class="d-lg-none mt-3 mb-3">
+          <form action="/listings" method="GET">
+            <div class="input-group">
+              <input 
+                type="text" 
+                name="search" 
+                class="form-control" 
+                placeholder="Search destinations..."
+                value="<%= typeof search !== 'undefined' ? search : '' %>">
+              <button class="btn btn-light" type="submit">
+                <i class="fa-solid fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      <% } %>
+
+      <!-- Mobile Admin Actions -->
+      <% if (typeof currUser !== 'undefined' && currUser && currUser.role === "admin") { %>
+        <div class="navbar-nav d-md-none mt-2">
+          <a class="btn btn-navbar btn-navbar-primary mb-2" href="/listings/new">
+            <i class="fa-solid fa-plus"></i>
+            Add Listing
+          </a>
+          <a class="btn btn-navbar btn-navbar-secondary mb-2" href="/admin/dashboard">
+            <i class="fa-solid fa-chart-line"></i>
+            Dashboard
+          </a>
+        </div>
+      <% } %>
+
+      <!-- Right Side - User Actions -->
+      <div class="navbar-nav ms-auto d-flex align-items-center gap-2">
+        
+        <% if (typeof currUser !== 'undefined' && currUser && currUser.role === "admin") { %>
+          <!-- Admin Badge and Logout -->
+          <span class="badge-admin">
+            <i class="fas fa-user-shield"></i>
+            Admin
+          </span>
+          <a class="btn btn-navbar btn-navbar-secondary" href="/logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+          </a>
+        <% } else if(typeof currUser !== 'undefined' && currUser) { %>
+          <!-- Regular User Actions -->
+          <a class="nav-link-custom" href="/bookings/my-bookings">
+            <i class="fa-solid fa-calendar-check"></i>
+            My Bookings
+          </a>
+          <span class="user-greeting">
+            <i class="fa-solid fa-user-circle"></i>
+            <%= currUser.username %>
+          </span>
+          <a class="btn btn-navbar btn-navbar-secondary" href="/logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+          </a>
+        <% } %>
+
+      </div>
+
+    </div>
+
+  </div>
+</nav>

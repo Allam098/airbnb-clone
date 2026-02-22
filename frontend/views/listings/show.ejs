@@ -1,0 +1,461 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+  .listing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .listing-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  .listing-header {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .listing-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .listing-location {
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .listing-details-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .detail-row:last-child {
+    border-bottom: none;
+  }
+
+  .detail-label {
+    color: #666;
+    font-weight: 500;
+  }
+
+  .detail-value {
+    color: #333;
+    font-weight: 600;
+  }
+
+  .price-tag {
+    font-size: 1.8rem;
+    color: #667eea;
+    font-weight: 700;
+  }
+
+  .booking-card {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 2rem;
+    border: 2px solid #e9ecef;
+    position: sticky;
+    top: 100px;
+    z-index: 10;
+  }
+
+  .booking-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-control {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+  }
+
+  .form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+  }
+
+  .btn-book {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .btn-book:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    color: white;
+  }
+
+  .admin-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .btn-admin {
+    flex: 1;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .reviews-section {
+    margin-top: 3rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+
+  .review-form-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+  }
+
+  .star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .star-rating input {
+    display: none;
+  }
+
+  .star-rating label {
+    font-size: 2.5rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .star-rating input:checked ~ label,
+  .star-rating label:hover,
+  .star-rating label:hover ~ label {
+    color: #ffc107;
+  }
+
+  .review-item {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .review-stars {
+    color: #ffc107;
+    font-size: 1.2rem;
+  }
+
+  .review-comment {
+    color: #666;
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+
+  .btn-delete-review {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+  }
+
+  .no-reviews {
+    text-align: center;
+    padding: 3rem;
+    color: #999;
+  }
+
+  @media (max-width: 768px) {
+    .listing-image {
+      height: 250px;
+    }
+    
+    .listing-title {
+      font-size: 1.5rem;
+    }
+    
+    .admin-actions {
+      flex-direction: column;
+    }
+    
+    .booking-card {
+      position: relative;
+      top: 0;
+    }
+  }
+</style>
+
+<div class="listing-container">
+  
+  <!-- Listing Image -->
+  <img src="<%= listing.image.url %>" 
+       class="listing-image"
+       alt="<%= listing.title %>">
+
+  <!-- Listing Header -->
+  <div class="listing-header">
+    <h1 class="listing-title"><%= listing.title %></h1>
+    <p class="listing-location">
+      <i class="fa-solid fa-location-dot me-2"></i>
+      <%= listing.location %>, <%= listing.country %>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      
+      <!-- Listing Details -->
+      <div class="listing-details-card">
+        <div class="detail-row">
+          <span class="detail-label">Hosted by</span>
+          <span class="detail-value">
+            <i class="fa-solid fa-user-circle me-2"></i>
+            <%= listing.owner?.username || "Unknown" %>
+          </span>
+        </div>
+        
+        <div class="detail-row">
+          <span class="detail-label">Category</span>
+          <span class="detail-value">
+            <i class="fa-solid fa-tag me-2"></i>
+            <%= listing.category %>
+          </span>
+        </div>
+        
+        <div class="detail-row">
+          <span class="detail-label">Price per night</span>
+          <span class="price-tag">
+            ₹<%= listing.price.toLocaleString("en-IN") %>
+          </span>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="listing-details-card">
+        <h3 class="mb-3">About this place</h3>
+        <p class="text-muted"><%= listing.description %></p>
+      </div>
+
+      <!-- Admin Actions -->
+      <% if (typeof currUser !== 'undefined' && currUser && currUser.role === "admin") { %>
+        <div class="admin-actions">
+          <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary btn-admin">
+            <i class="fa-solid fa-pen-to-square me-2"></i>
+            Edit Listing
+          </a>
+          <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="flex-fill">
+            <button type="submit" class="btn btn-danger btn-admin w-100">
+              <i class="fa-solid fa-trash me-2"></i>
+              Delete Listing
+            </button>
+          </form>
+        </div>
+      <% } %>
+
+    </div>
+
+    <!-- Booking Card -->
+    <% if (typeof currUser !== 'undefined' && currUser && currUser.role !== "admin") { %>
+      <div class="col-lg-4">
+        <div class="booking-card">
+          <h3 class="booking-title">Book this place</h3>
+          
+          <form action="/listings/<%= listing._id %>/book" method="POST">
+            <div class="mb-3">
+              <label for="checkIn" class="form-label">Check-in</label>
+              <input 
+                type="date" 
+                class="form-control" 
+                id="checkIn" 
+                name="checkIn" 
+                min="<%= new Date().toISOString().split('T')[0] %>"
+                required
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="checkOut" class="form-label">Check-out</label>
+              <input 
+                type="date" 
+                class="form-control" 
+                id="checkOut" 
+                name="checkOut" 
+                min="<%= new Date().toISOString().split('T')[0] %>"
+                required
+              >
+            </div>
+
+            <div class="mb-4">
+              <label for="guests" class="form-label">Guests</label>
+              <input 
+                type="number" 
+                class="form-control" 
+                id="guests" 
+                name="guests" 
+                min="1" 
+                value="1"
+                required
+              >
+            </div>
+
+            <button type="submit" class="btn-book">
+              <i class="fa-solid fa-calendar-check me-2"></i>
+              Reserve
+            </button>
+          </form>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="reviews-section">
+    <h2 class="section-title">
+      <i class="fa-solid fa-star me-2"></i>
+      Reviews
+    </h2>
+
+    <!-- Review Form -->
+    <% if (typeof currUser !== 'undefined' && currUser) { %>
+      <div class="review-form-card">
+        <h5 class="mb-4">Share your experience</h5>
+        
+        <form action="/listings/<%= listing._id %>/reviews" method="POST">
+          <div class="star-rating">
+            <input type="radio" id="star5" name="review[rating]" value="5" required>
+            <label for="star5">★</label>
+            <input type="radio" id="star4" name="review[rating]" value="4">
+            <label for="star4">★</label>
+            <input type="radio" id="star3" name="review[rating]" value="3">
+            <label for="star3">★</label>
+            <input type="radio" id="star2" name="review[rating]" value="2">
+            <label for="star2">★</label>
+            <input type="radio" id="star1" name="review[rating]" value="1">
+            <label for="star1">★</label>
+          </div>
+
+          <textarea 
+            name="review[comment]"
+            rows="4"
+            class="form-control mb-3"
+            placeholder="Tell us about your experience..."
+            required
+          ></textarea>
+
+          <button type="submit" class="btn btn-dark rounded-pill px-4">
+            <i class="fa-solid fa-paper-plane me-2"></i>
+            Submit Review
+          </button>
+        </form>
+      </div>
+    <% } else { %>
+      <div class="review-form-card text-center">
+        <p class="text-muted mb-0">
+          <a href="/login" class="text-decoration-none">Login</a> to leave a review
+        </p>
+      </div>
+    <% } %>
+
+    <!-- Reviews List -->
+    <% if (listing.reviews.length === 0) { %>
+      <div class="no-reviews">
+        <i class="fa-regular fa-comment-dots fa-3x mb-3"></i>
+        <p>No reviews yet. Be the first to review!</p>
+      </div>
+    <% } else { %>
+      <div class="reviews-list row g-3">
+        <% for (let review of listing.reviews) { %>
+          <div class="col-md-6">
+            <div class="review-item">
+              <div class="review-header">
+                <div>
+                  <div class="review-author">
+                    <i class="fa-solid fa-user-circle"></i>
+                    <%= review.author?.username || "Anonymous" %>
+                  </div>
+                  <div class="review-stars mt-1">
+                    <% for (let i = 0; i < review.rating; i++) { %>★<% } %>
+                  </div>
+                </div>
+                
+                <% if (typeof currUser !== 'undefined' && currUser && review.author && currUser._id.equals(review.author._id)) { %>
+                  <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                    <button class="btn btn-outline-danger btn-sm btn-delete-review">
+                      <i class="fa-solid fa-trash-can me-1"></i>
+                      Delete
+                    </button>
+                  </form>
+                <% } %>
+              </div>
+              
+              <p class="review-comment"><%= review.comment %></p>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+
+</div>

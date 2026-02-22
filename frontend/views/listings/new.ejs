@@ -1,0 +1,113 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container py-5">
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+
+      <div class="card shadow-lg p-4">
+
+        <h3 class="mb-4 text-center">Create a New Listing</h3>
+
+        <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+
+          <!-- Title -->
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input
+              name="listing[title]"
+              type="text"
+              class="form-control"
+              placeholder="A short, catchy name for your stay"
+              required
+            >
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea
+              name="listing[description]"
+              class="form-control"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+
+          <!-- Category (NEW ADDED) -->
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select
+              name="listing[category]"
+              class="form-select"
+              required
+            >
+              <option value="">Select category</option>
+              <option value="Trending">Trending</option>
+              <option value="Top Rated">Top Rated</option>
+              <option value="New">New</option>
+              <option value="Luxury">Luxury</option>
+              <option value="Beach">Beach</option>
+              <option value="Mountain">Mountain</option>
+              <option value="City">City</option>
+            </select>
+          </div>
+
+          <!-- Image -->
+          <div class="mb-3">
+            <label class="form-label">Upload Listing Image</label>
+            <input
+              name="listing[image]"
+              type="file"
+              class="form-control"
+              required
+            >
+          </div>
+
+          <!-- Price + Location -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Price</label>
+              <input
+                name="listing[price]"
+                type="number"
+                class="form-control"
+                min="0"
+                required
+              >
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Location</label>
+              <input
+                name="listing[location]"
+                type="text"
+                class="form-control"
+                required
+              >
+            </div>
+          </div>
+
+          <!-- Country -->
+          <div class="mb-3">
+            <label class="form-label">Country</label>
+            <input
+              name="listing[country]"
+              type="text"
+              class="form-control"
+              required
+            >
+          </div>
+
+          <button class="btn btn-primary w-100 mt-2">
+            Add Listing
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

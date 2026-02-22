@@ -1,0 +1,177 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+  .profile-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+  }
+
+  .profile-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 3rem;
+    color: white;
+  }
+
+  .profile-name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .profile-email {
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .profile-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 1.5rem;
+  }
+
+  .profile-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .profile-info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .profile-info-row:last-child {
+    border-bottom: none;
+  }
+
+  .profile-label {
+    color: #666;
+    font-weight: 500;
+  }
+
+  .profile-value {
+    color: #333;
+    font-weight: 600;
+  }
+
+  .badge-role {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .badge-user {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .badge-admin {
+    background: #cce5ff;
+    color: #004085;
+  }
+</style>
+
+<div class="profile-container">
+  
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <i class="fa-solid fa-user"></i>
+    </div>
+    <h1 class="profile-name"><%= currUser.username %></h1>
+    <p class="profile-email"><%= currUser.email %></p>
+    <span class="badge-role <%= currUser.role === 'admin' ? 'badge-admin' : 'badge-user' %>">
+      <% if (currUser.role === 'admin') { %>
+        <i class="fa-solid fa-user-shield me-1"></i>
+        Administrator
+      <% } else { %>
+        <i class="fa-solid fa-user me-1"></i>
+        User
+      <% } %>
+    </span>
+  </div>
+
+  <!-- Account Information -->
+  <div class="profile-card">
+    <h3 class="profile-card-title">
+      <i class="fa-solid fa-id-card"></i>
+      Account Information
+    </h3>
+    
+    <div class="profile-info-row">
+      <span class="profile-label">Username</span>
+      <span class="profile-value"><%= currUser.username %></span>
+    </div>
+    
+    <div class="profile-info-row">
+      <span class="profile-label">Email</span>
+      <span class="profile-value"><%= currUser.email %></span>
+    </div>
+    
+    <div class="profile-info-row">
+      <span class="profile-label">Account Type</span>
+      <span class="profile-value"><%= currUser.role === 'admin' ? 'Administrator' : 'Regular User' %></span>
+    </div>
+    
+    <div class="profile-info-row">
+      <span class="profile-label">Member Since</span>
+      <span class="profile-value"><%= new Date().getFullYear() %></span>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="profile-card">
+    <h3 class="profile-card-title">
+      <i class="fa-solid fa-bolt"></i>
+      Quick Actions
+    </h3>
+    
+    <div class="d-flex gap-2 flex-wrap">
+      <% if (currUser.role !== 'admin') { %>
+        <a href="/bookings/my-bookings" class="btn btn-outline-primary">
+          <i class="fa-solid fa-calendar-check me-2"></i>
+          My Bookings
+        </a>
+      <% } %>
+      
+      <a href="/listings" class="btn btn-outline-primary">
+        <i class="fa-solid fa-home me-2"></i>
+        Browse Listings
+      </a>
+      
+      <a href="/settings" class="btn btn-outline-secondary">
+        <i class="fa-solid fa-gear me-2"></i>
+        Settings
+      </a>
+      
+      <a href="/forgot-password" class="btn btn-outline-warning">
+        <i class="fa-solid fa-key me-2"></i>
+        Change Password
+      </a>
+    </div>
+  </div>
+
+</div>

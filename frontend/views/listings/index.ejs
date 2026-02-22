@@ -1,0 +1,262 @@
+<% layout("layouts/boilerplate") %>
+
+<!-- Category Filter Pills & Price Filters -->
+<div class="container mt-4 mb-3">
+  <div class="filter-wrapper">
+    <div class="filter-left">
+      <a href="/listings"
+         class="filter-item <%= !category ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-border-all"></i>
+        <span>All</span>
+      </a>
+
+      <a href="/listings?category=Trending"
+         class="filter-item <%= category === 'Trending' ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-fire"></i>
+        <span>Trending</span>
+      </a>
+
+      <a href="/listings?category=Top Rated"
+         class="filter-item <%= category === 'Top Rated' ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-star"></i>
+        <span>Top Rated</span>
+      </a>
+
+      <a href="/listings?category=New"
+         class="filter-item <%= category === 'New' ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-bolt"></i>
+        <span>New</span>
+      </a>
+
+      <a href="/listings?category=Luxury"
+         class="filter-item <%= category === 'Luxury' ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-gem"></i>
+        <span>Luxury</span>
+      </a>
+
+      <a href="/listings?category=Beach"
+         class="filter-item <%= category === 'Beach' ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <span>Beach</span>
+      </a>
+
+      <a href="/listings?category=Mountain"
+         class="filter-item <%= category === 'Mountain' ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-mountain"></i>
+        <span>Mountain</span>
+      </a>
+
+      <a href="/listings?category=City"
+         class="filter-item <%= category === 'City' ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-city"></i>
+        <span>City</span>
+      </a>
+
+      <a href="/listings?category=Nature"
+         class="filter-item <%= category === 'Nature' ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-tree"></i>
+        <span>Nature</span>
+      </a>
+
+      <a href="/listings?category=Camping"
+         class="filter-item <%= category === 'Camping' ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-campground"></i>
+        <span>Camping</span>
+      </a>
+
+      <a href="/listings?category=Pool"
+         class="filter-item <%= category === 'Pool' ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-water-ladder"></i>
+        <span>Pool</span>
+      </a>
+
+      <a href="/listings?category=Countryside"
+         class="filter-item <%= category === 'Countryside' ? 'active-filter' : '' %>">
+        <i class="fa-solid fa-tractor"></i>
+        <span>Countryside</span>
+      </a>
+    </div>
+
+    <!-- Price Filters & Tax Toggle -->
+    <div class="filter-right">
+      <form action="/listings" method="GET" class="price-filter-form">
+        <% if (category) { %>
+          <input type="hidden" name="category" value="<%= category %>">
+        <% } %>
+        <% if (search) { %>
+          <input type="hidden" name="search" value="<%= search %>">
+        <% } %>
+        
+        <div class="price-inputs">
+          <input 
+            type="number" 
+            name="minPrice" 
+            class="price-input" 
+            placeholder="Min ₹"
+            value="<%= minPrice || '' %>">
+          
+          <span class="price-separator">-</span>
+          
+          <input 
+            type="number" 
+            name="maxPrice" 
+            class="price-input" 
+            placeholder="Max ₹"
+            value="<%= maxPrice || '' %>">
+          
+          <button type="submit" class="price-filter-btn">
+            <i class="fa-solid fa-filter"></i>
+          </button>
+        </div>
+      </form>
+
+      <div class="tax-box">
+        <span>Tax</span>
+        <label class="switch">
+          <input type="checkbox" id="taxSwitch">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Results Info -->
+<div class="container">
+  <div class="results-info mb-3">
+    <p class="text-muted">
+      <i class="fa-solid fa-list"></i> 
+      Found <strong><%= allListings.length %></strong> listing(s)
+      <% if (search || category || minPrice || maxPrice) { %>
+        <% if (search) { %>
+          for "<%= search %>"
+        <% } %>
+        <% if (category) { %>
+          in <%= category %>
+        <% } %>
+        <% if (minPrice || maxPrice) { %>
+          <% if (minPrice && maxPrice) { %>
+            (₹<%= minPrice %> - ₹<%= maxPrice %>)
+          <% } else if (minPrice) { %>
+            (₹<%= minPrice %>+)
+          <% } else if (maxPrice) { %>
+            (up to ₹<%= maxPrice %>)
+          <% } %>
+        <% } %>
+        <a href="/listings" class="clear-filters-link">
+          <i class="fa-solid fa-times"></i> Clear
+        </a>
+      <% } %>
+    </p>
+  </div>
+</div>
+
+<!-- LISTINGS GRID -->
+<div class="container py-4 mb-5">
+
+  <% if (allListings.length === 0) { %>
+    <div class="text-center mt-5 mb-5">
+      <i class="fa-solid fa-search fa-3x text-muted mb-3"></i>
+      <h4>No listings found</h4>
+      <p class="text-muted">Try adjusting your filters or search criteria</p>
+      <a href="/listings" class="btn btn-primary mt-3">View All Listings</a>
+    </div>
+  <% } %>
+
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mb-5">
+
+    <% for (let listing of allListings) { %>
+
+      <div class="col">
+        <div class="card listing-card h-100 shadow-sm">
+
+          <a href="/listings/<%= listing._id %>"
+             class="text-decoration-none text-dark">
+
+            <!-- IMAGE -->
+            <img src="<%= listing.image?.url %>"
+                 class="card-img-top"
+                 style="height: 230px; object-fit: cover;"
+                 alt="listing-img">
+
+            <!-- BODY -->
+            <div class="card-body d-flex flex-column">
+
+              <p class="card-text mb-2">
+                <b><%= listing.title %></b>
+              </p>
+
+              <p class="fw-semibold mt-auto price"
+                 data-base="<%= listing.price %>">
+                ₹ <%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %> /night
+              </p>
+
+              <p class="text-muted small mb-0">
+                <i class="fa-solid fa-location-dot"></i> <%= listing.location %>
+              </p>
+
+            </div>
+
+          </a>
+
+        </div>
+      </div>
+
+    <% } %>
+
+  </div>
+</div>
+
+
+<!-- TAX TOGGLE SCRIPT -->
+<script>
+  const taxSwitch = document.getElementById("taxSwitch");
+  const priceElements = document.querySelectorAll(".price");
+  const TAX_RATE = 0.18;
+
+  if (localStorage.getItem("taxEnabled") === "true") {
+    taxSwitch.checked = true;
+    updatePrices(true);
+  }
+
+  taxSwitch.addEventListener("change", () => {
+    localStorage.setItem("taxEnabled", taxSwitch.checked);
+    updatePrices(taxSwitch.checked);
+  });
+
+  function updatePrices(includeTax) {
+    priceElements.forEach(priceEl => {
+      const basePrice = Number(priceEl.dataset.base);
+      if (!basePrice) return;
+
+      if (includeTax) {
+        const total = basePrice + basePrice * TAX_RATE;
+        priceEl.innerText =
+          `₹ ${total.toLocaleString("en-IN")} /night (incl. tax)`;
+      } else {
+        priceEl.innerText =
+          `₹ ${basePrice.toLocaleString("en-IN")} /night`;
+      }
+    });
+  }
+</script>
+
+<style>
+  .search-bar-container {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+
+  .results-info {
+    padding: 10px 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+
+  .active-filter {
+    color: #ff385c !important;
+    font-weight: 600;
+  }
+</style>
