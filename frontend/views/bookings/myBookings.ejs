@@ -240,13 +240,14 @@
           <div class="booking-card-body">
             
             <!-- Listing Image -->
-            <% if (booking.listing && booking.listing.image) { %>
+            <% if (booking.listing && booking.listing.image && booking.listing.image.url) { %>
               <img src="<%= booking.listing.image.url %>" 
                    class="booking-image" 
-                   alt="<%= booking.listing.title %>">
+                   alt="<%= booking.listing.title %>"
+                   onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=60';">
             <% } else { %>
-              <div class="booking-image" style="background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
-                <i class="fa-solid fa-image fa-3x" style="color: #ccc;"></i>
+              <div class="booking-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+                <i class="fa-solid fa-image fa-3x" style="color: white;"></i>
               </div>
             <% } %>
 
