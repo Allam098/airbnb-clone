@@ -119,7 +119,7 @@
 
   /* Ensure proper spacing for non-admin users */
   .navbar-search-desktop.user-search {
-    margin-left: 3rem;
+    margin-left: 1rem;
   }
 
   .search-form-navbar {
@@ -205,18 +205,20 @@
       <span>WanderLust</span>
     </a>
 
-    <!-- Admin Actions (Left Side - After Brand) -->
-    <% if (typeof currUser !== 'undefined' && currUser && currUser.role === "admin") { %>
+    <!-- User Actions (Left Side - After Brand) -->
+    <% if (typeof currUser !== 'undefined' && currUser) { %>
       <div class="navbar-nav ms-3 d-none d-md-flex me-4">
         <span class="nav-separator">|</span>
         <a class="btn btn-navbar btn-navbar-primary me-2" href="/listings/new">
           <i class="fa-solid fa-plus"></i>
           Add Listing
         </a>
-        <a class="btn btn-navbar btn-navbar-secondary" href="/admin/dashboard">
-          <i class="fa-solid fa-chart-line"></i>
-          Dashboard
-        </a>
+        <% if (currUser.role === "admin") { %>
+          <a class="btn btn-navbar btn-navbar-secondary" href="/admin/dashboard">
+            <i class="fa-solid fa-chart-line"></i>
+            Dashboard
+          </a>
+        <% } %>
       </div>
     <% } %>
 
@@ -268,17 +270,19 @@
         </div>
       <% } %>
 
-      <!-- Mobile Admin Actions -->
-      <% if (typeof currUser !== 'undefined' && currUser && currUser.role === "admin") { %>
+      <!-- Mobile User Actions -->
+      <% if (typeof currUser !== 'undefined' && currUser) { %>
         <div class="navbar-nav d-md-none mt-2">
           <a class="btn btn-navbar btn-navbar-primary mb-2" href="/listings/new">
             <i class="fa-solid fa-plus"></i>
             Add Listing
           </a>
-          <a class="btn btn-navbar btn-navbar-secondary mb-2" href="/admin/dashboard">
-            <i class="fa-solid fa-chart-line"></i>
-            Dashboard
-          </a>
+          <% if (currUser.role === "admin") { %>
+            <a class="btn btn-navbar btn-navbar-secondary mb-2" href="/admin/dashboard">
+              <i class="fa-solid fa-chart-line"></i>
+              Dashboard
+            </a>
+          <% } %>
         </div>
       <% } %>
 
