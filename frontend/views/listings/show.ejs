@@ -230,6 +230,7 @@
   @media (max-width: 768px) {
     .listing-image {
       height: 250px;
+      border-radius: 12px;
     }
     
     .listing-title {
@@ -243,6 +244,62 @@
     .booking-card {
       position: relative;
       top: 0;
+      padding: 1.5rem;
+    }
+
+    .listing-container {
+      padding: 1rem 0.5rem;
+    }
+
+    .listing-details-card {
+      padding: 1.5rem;
+    }
+
+    .price-tag {
+      font-size: 1.5rem;
+    }
+
+    .detail-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .listing-image {
+      height: 200px;
+    }
+
+    .listing-title {
+      font-size: 1.3rem;
+    }
+
+    .listing-location {
+      font-size: 1rem;
+    }
+
+    .listing-details-card {
+      padding: 1rem;
+    }
+
+    .booking-card {
+      padding: 1rem;
+    }
+
+    .btn {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+
+    .review-item {
+      padding: 1rem;
+    }
+
+    .review-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
     }
   }
 </style>

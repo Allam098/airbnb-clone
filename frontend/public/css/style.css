@@ -552,3 +552,389 @@ input:checked + .slider:before {
 .star-rating label {
   font-size: 26px;
 }
+
+
+/* ============================= */
+/* MOBILE RESPONSIVE STYLES */
+/* ============================= */
+
+/* Mobile: Extra Small devices (phones, less than 576px) */
+@media (max-width: 575.98px) {
+  /* Body and Container */
+  body {
+    font-size: 14px;
+  }
+
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  /* Navbar Mobile */
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .navbar-brand i {
+    font-size: 1.4rem;
+  }
+
+  /* Listing Cards */
+  .listing-card {
+    margin-bottom: 20px;
+  }
+
+  .listing-card img {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .card-body {
+    padding: 12px;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-text {
+    font-size: 0.85rem;
+  }
+
+  /* Show Page Image */
+  .show-img {
+    height: 200px;
+  }
+
+  /* Buttons */
+  .btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  /* Filter Wrapper */
+  .filter-wrapper {
+    flex-direction: column;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .filter-left {
+    gap: 15px;
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 8px;
+  }
+
+  .filter-item {
+    min-width: 60px;
+    font-size: 11px;
+  }
+
+  .filter-item i {
+    font-size: 16px;
+  }
+
+  .filter-right {
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 0;
+  }
+
+  /* Price Filter */
+  .price-inputs {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .price-input {
+    width: 70px;
+    font-size: 13px;
+    padding: 5px 8px;
+  }
+
+  /* Tax Box */
+  .tax-box {
+    width: 100%;
+    justify-content: space-between;
+    padding: 8px 12px;
+  }
+
+  /* Footer */
+  .f-info {
+    padding: 1rem 0;
+  }
+
+  .f-info-socials {
+    gap: 12px;
+  }
+
+  .f-info-socials i {
+    font-size: 1rem;
+  }
+
+  .f-info-links {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Forms */
+  .form-control {
+    font-size: 14px;
+  }
+
+  .form-label {
+    font-size: 0.9rem;
+  }
+
+  /* Booking Cards */
+  .booking-card {
+    padding: 12px;
+  }
+
+  .booking-card h5 {
+    font-size: 1rem;
+  }
+
+  .booking-card p {
+    font-size: 0.85rem;
+  }
+
+  /* Admin Dashboard */
+  .dashboard-card {
+    margin-bottom: 15px;
+  }
+
+  .dashboard-card h5 {
+    font-size: 1rem;
+  }
+
+  /* Review Section */
+  .star-rating label {
+    font-size: 22px;
+  }
+
+  /* Landing Page */
+  .landing-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .landing-hero p {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet: Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .container {
+    max-width: 540px;
+  }
+
+  .listing-card img {
+    height: 220px;
+  }
+
+  .show-img {
+    height: 220px;
+  }
+
+  .filter-wrapper {
+    padding: 14px;
+  }
+
+  .filter-left {
+    gap: 20px;
+  }
+}
+
+/* Tablet: Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .container {
+    max-width: 720px;
+  }
+
+  .listing-card img {
+    height: 230px;
+  }
+
+  .show-img {
+    height: 230px;
+  }
+
+  .filter-wrapper {
+    padding: 16px;
+  }
+
+  .navbar {
+    padding: 1rem 1.5rem;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .container {
+    max-width: 960px;
+  }
+
+  .listing-card img {
+    height: 240px;
+  }
+
+  .show-img {
+    height: 240px;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+
+  .listing-card img {
+    height: 250px;
+  }
+
+  .show-img {
+    height: 250px;
+  }
+}
+
+/* Touch-friendly improvements for mobile */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger tap targets */
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .filter-item {
+    padding: 8px;
+    min-width: 70px;
+  }
+
+  .nav-link {
+    padding: 12px 16px !important;
+  }
+
+  /* Remove hover effects on touch devices */
+  .filter-item:hover {
+    transform: none;
+  }
+
+  .listing-card:hover {
+    transform: none;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 767.98px) and (orientation: landscape) {
+  .show-img {
+    height: 180px;
+  }
+
+  .listing-card img {
+    height: 180px;
+  }
+
+  .navbar {
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* Prevent horizontal scroll on mobile */
+@media (max-width: 767.98px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .row {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+  .row > * {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Image optimization for mobile */
+@media (max-width: 767.98px) {
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .card-img-top {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Mobile-specific utility classes */
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .mobile-only {
+    display: block;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+}
+
+/* Improve readability on small screens */
+@media (max-width: 575.98px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
+/* Mobile-friendly spacing */
+@media (max-width: 767.98px) {
+  .mt-3, .my-3 {
+    margin-top: 1rem !important;
+  }
+
+  .mb-3, .my-3 {
+    margin-bottom: 1rem !important;
+  }
+
+  .pt-3, .py-3 {
+    padding-top: 1rem !important;
+  }
+
+  .pb-3, .py-3 {
+    padding-bottom: 1rem !important;
+  }
+}

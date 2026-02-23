@@ -31,6 +31,39 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(8, 145, 178, 0.4);
   }
+
+  /* Mobile Responsive */
+  @media (max-width: 767.98px) {
+    .row h1 {
+      font-size: 1.75rem;
+      text-align: center;
+    }
+
+    .col-6.offset-3 {
+      width: 100%;
+      margin-left: 0;
+      padding: 0 20px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 0.875rem;
+    }
+
+    .form-control {
+      font-size: 16px; /* Prevents zoom on iOS */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .row h1 {
+      font-size: 1.5rem;
+    }
+
+    .mt-3 {
+      margin-top: 1rem !important;
+    }
+  }
 </style>
 
 <div class="row mt-3">
