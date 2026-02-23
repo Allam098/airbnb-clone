@@ -3,6 +3,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 
 const express = require("express");
 const app = express();
+const helmet = require("helmet");
 const mongoose = require("mongoose");
 const path = require("path");
 const ExpressError = require("./utils/ExpressError.js");
@@ -11,6 +12,30 @@ const reviewRouter=require("./routes/review.js");
 const userRouter=require("./routes/user.js");
 const bookingRouter=require("./routes/booking.js");
 const adminRouter=require("./routes/admin.js");
+
+// Trust proxy for Render/production
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
+// Security middleware - Helmet with custom configuration
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://cdnjs.cloudflare.com", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https:", "http:"],
+      connectSrc: ["'self'"],
+      frameSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+}));
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../frontend/views"));
 app.use(express.urlencoded({ extended: true }));
@@ -30,12 +55,14 @@ const upload=multer({dest : path.join(__dirname, '../uploads/')});
 
 
 const sessionOptions = {
-  secret: "mysupersecretcode",
+  secret: process.env.SESSION_SECRET || "mysupersecretcode",
   resave: false,
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    maxAge: 7 * 24 * 60 * 60 * 1000
+    secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    sameSite: 'lax'
   }
 };
 
@@ -121,4 +148,5 @@ app.use((err, req, res, next) => {
 
 app.listen(8080, () => {
   console.log("server is listening to the port 8080");
+  console.log("Environment:", process.env.NODE_ENV || 'development');
 });
