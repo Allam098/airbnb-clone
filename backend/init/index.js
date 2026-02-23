@@ -19,16 +19,37 @@ const connectDB = async () => {
 
 const initDB = async () => {
   try {
+    console.log("\n🗑️  Clearing existing listings...");
     await Listing.deleteMany({});
 
-    const user = await User.findOne();
+    console.log("👤 Looking for existing user...");
+    let user = await User.findOne();
 
     if (!user) {
-      console.log("No user found. Please signup first.");
-      mongoose.connection.close();
-      return;
+      console.log("⚠️  No user found. Creating default admin user...");
+      
+      // Create default admin user
+      const adminUser = new User({
+        username: "wanderlust_admin",
+        email: "admin@wanderlust.com",
+        role: "admin"
+      });
+
+      try {
+        user = await User.register(adminUser, "WanderLust@2024");
+        console.log("✅ Default admin user created!");
+        console.log("   Username: wanderlust_admin");
+        console.log("   Password: WanderLust@2024");
+      } catch (err) {
+        console.error("❌ Error creating admin user:", err.message);
+        mongoose.connection.close();
+        return;
+      }
+    } else {
+      console.log(`✅ Found user: ${user.username}`);
     }
 
+    console.log("\n📦 Inserting sample listings...");
     const updatedData = initData.data.map((obj) => ({
       ...obj,
       owner: user._id
@@ -36,10 +57,19 @@ const initDB = async () => {
 
     await Listing.insertMany(updatedData);
 
-    console.log("Data initialized with owner ✅");
+    console.log(`✅ Successfully added ${updatedData.length} listings!`);
+    console.log("\n" + "═".repeat(50));
+    console.log("  DATABASE INITIALIZED");
+    console.log("═".repeat(50));
+    console.log(`  Total Listings: ${updatedData.length}`);
+    console.log(`  Owner: ${user.username}`);
+    console.log("═".repeat(50));
+    console.log("\n🌐 You can now access your app and see the listings!\n");
+    
     mongoose.connection.close();
   } catch (err) {
-    console.error(err);
+    console.error("❌ Error during initialization:", err);
+    mongoose.connection.close();
   }
 };
 
