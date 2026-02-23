@@ -516,3 +516,44 @@
   </div>
 
 </div>
+
+
+<script>
+  // Date validation for booking form
+  const checkInInput = document.getElementById('checkIn');
+  const checkOutInput = document.getElementById('checkOut');
+
+  if (checkInInput && checkOutInput) {
+    // When check-in date changes, update check-out minimum date
+    checkInInput.addEventListener('change', function() {
+      const checkInDate = new Date(this.value);
+      
+      // Set check-out minimum to the day after check-in
+      const nextDay = new Date(checkInDate);
+      nextDay.setDate(nextDay.getDate() + 1);
+      
+      const minCheckOut = nextDay.toISOString().split('T')[0];
+      checkOutInput.min = minCheckOut;
+      
+      // If current check-out is before new minimum, reset it
+      if (checkOutInput.value && checkOutInput.value <= this.value) {
+        checkOutInput.value = minCheckOut;
+      }
+    });
+
+    // Validate on form submit
+    const bookingForm = checkInInput.closest('form');
+    if (bookingForm) {
+      bookingForm.addEventListener('submit', function(e) {
+        const checkIn = new Date(checkInInput.value);
+        const checkOut = new Date(checkOutInput.value);
+        
+        if (checkOut <= checkIn) {
+          e.preventDefault();
+          alert('Check-out date must be after check-in date!');
+          return false;
+        }
+      });
+    }
+  }
+</script>
