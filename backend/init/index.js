@@ -26,22 +26,23 @@ const initDB = async () => {
     let user = await User.findOne();
 
     if (!user) {
-      console.log("⚠️  No user found. Creating default admin user...");
+      console.log("⚠️  No user found. Creating default user 'vamsi'...");
       
-      // Create default admin user
-      const adminUser = new User({
-        username: "wanderlust_admin",
-        email: "admin@wanderlust.com",
+      // Create default user 'vamsi'
+      const defaultUser = new User({
+        username: "vamsi",
+        email: "vamsikrishnaallam7@gmail.com",
         role: "admin"
       });
 
       try {
-        user = await User.register(adminUser, "WanderLust@2024");
-        console.log("✅ Default admin user created!");
-        console.log("   Username: wanderlust_admin");
-        console.log("   Password: WanderLust@2024");
+        user = await User.register(defaultUser, "Vamsi@2024");
+        console.log("✅ Default user created!");
+        console.log("   Username: vamsi");
+        console.log("   Password: Vamsi@2024");
+        console.log("   Role: admin");
       } catch (err) {
-        console.error("❌ Error creating admin user:", err.message);
+        console.error("❌ Error creating user:", err.message);
         mongoose.connection.close();
         return;
       }
