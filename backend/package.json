@@ -14,6 +14,7 @@
     "check-users": "node scripts/checkUsers.js",
     "list-users": "node scripts/listUsers.js",
     "check-listings": "node scripts/checkListings.js",
+    "change-owner": "node scripts/changeOwner.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
