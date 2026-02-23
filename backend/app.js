@@ -16,6 +16,15 @@ const adminRouter=require("./routes/admin.js");
 // Trust proxy for Render/production
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
+  
+  // Force HTTPS redirect
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https') {
+      res.redirect(`https://${req.header('host')}${req.url}`);
+    } else {
+      next();
+    }
+  });
 }
 
 // Security middleware - Helmet with custom configuration
