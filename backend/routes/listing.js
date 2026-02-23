@@ -28,13 +28,13 @@ router.route("/new")
 router.route("/:id")
   .get(wrapAsync(listingController.showListing))
   .put(
-    isOwnerOrAdmin,
+    wrapAsync(isOwnerOrAdmin),
     upload.single("listing[image]"),
     validateListing,
     wrapAsync(listingController.updateListing)
   )
   .delete(
-    isOwnerOrAdmin,
+    wrapAsync(isOwnerOrAdmin),
     wrapAsync(listingController.deleteListing)
   );
 
@@ -42,7 +42,7 @@ router.route("/:id")
 // Edit Route
 router.route("/:id/edit")
   .get(
-    isOwnerOrAdmin,
+    wrapAsync(isOwnerOrAdmin),
     wrapAsync(listingController.renderEditForm)
   );
 
