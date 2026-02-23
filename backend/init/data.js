@@ -295,6 +295,123 @@ const sampleListings = [
     location: "Zermatt",
     country: "Switzerland",
     category: "Mountain"
+  },
+  {
+    title: "Tuscan Countryside Villa",
+    description: "Immerse yourself in the beauty of rural Tuscany. This traditional stone villa offers peace, vineyards, and authentic Italian charm.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?auto=format&fit=crop&w=800&q=60" },
+    price: 2200,
+    location: "Siena",
+    country: "Italy",
+    category: "Countryside"
+  },
+  {
+    title: "French Countryside Farmhouse",
+    description: "Escape to the rolling hills of Provence in this beautifully restored farmhouse surrounded by lavender fields.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1464146072230-91cabc968266?auto=format&fit=crop&w=800&q=60" },
+    price: 1900,
+    location: "Provence",
+    country: "France",
+    category: "Countryside"
+  },
+  {
+    title: "English Countryside Cottage",
+    description: "Charming thatched-roof cottage in the heart of the Cotswolds. Perfect for a peaceful countryside retreat.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=60" },
+    price: 1600,
+    location: "Cotswolds",
+    country: "United Kingdom",
+    category: "Countryside"
+  },
+  {
+    title: "Spanish Countryside Estate",
+    description: "Luxurious estate in rural Andalusia with olive groves, mountain views, and traditional Spanish architecture.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=60" },
+    price: 2400,
+    location: "Andalusia",
+    country: "Spain",
+    category: "Countryside"
+  },
+  {
+    title: "Bali Infinity Pool Villa",
+    description: "Stunning modern villa with private infinity pool overlooking rice terraces. Ultimate tropical luxury.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=800&q=60" },
+    price: 2800,
+    location: "Ubud",
+    country: "Indonesia",
+    category: "Pool"
+  },
+  {
+    title: "Greek Island Pool House",
+    description: "Whitewashed villa with spectacular pool and panoramic Aegean Sea views. Pure Mediterranean bliss.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=60" },
+    price: 3200,
+    location: "Santorini",
+    country: "Greece",
+    category: "Pool"
+  },
+  {
+    title: "Miami Modern Pool Mansion",
+    description: "Contemporary luxury mansion with resort-style pool, spa, and entertainment area. Perfect for groups.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=60" },
+    price: 4500,
+    location: "Miami",
+    country: "United States",
+    category: "Pool"
+  },
+  {
+    title: "Desert Oasis Pool Villa",
+    description: "Private desert retreat with stunning pool oasis. Modern architecture meets natural beauty in Palm Springs.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=60" },
+    price: 3500,
+    location: "Palm Springs",
+    country: "United States",
+    category: "Pool"
+  },
+  {
+    title: "Rainforest Eco Lodge",
+    description: "Sustainable eco-lodge deep in the Costa Rican rainforest. Wake up to howler monkeys and exotic birds.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=60" },
+    price: 1400,
+    location: "Monteverde",
+    country: "Costa Rica",
+    category: "Nature"
+  },
+  {
+    title: "Norwegian Fjord Cabin",
+    description: "Remote cabin on the edge of a pristine fjord. Experience Norway's dramatic natural beauty in solitude.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=60" },
+    price: 1800,
+    location: "Bergen",
+    country: "Norway",
+    category: "Nature"
+  },
+  {
+    title: "Amazon Jungle Retreat",
+    description: "Immersive jungle experience in the heart of the Amazon. Guided nature tours and wildlife spotting included.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=800&q=60" },
+    price: 1100,
+    location: "Manaus",
+    country: "Brazil",
+    category: "Nature"
+  },
+  {
+    title: "New Zealand Nature Lodge",
+    description: "Eco-friendly lodge surrounded by native bush and mountain streams. Perfect base for hiking and nature photography.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=60" },
+    price: 1600,
+    location: "Queenstown",
+    country: "New Zealand",
+    category: "Nature"
+  },
+  {
+    title: "Canadian Wilderness Cabin",
+    description: "Off-grid log cabin in the Canadian Rockies. Experience true wilderness with modern comforts.",
+    image: { filename: "listingimage", url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=60" },
+    price: 1300,
+    location: "Banff",
+    country: "Canada",
+    category: "Nature"
   }
 ];
 
